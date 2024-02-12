@@ -1,0 +1,104 @@
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="/public/css/style.css" />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"
+  ></script>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/weather">
+        <img src="/public/2395608.png" width="60px" alt="Darina" />
+      </a>
+      <div class="ms-auto">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/weather/<%= userId %>">Weather</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/movie/<%= userId %>">Movie</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/nasa/<%= userId %>">Nasa Daily</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/history/<%= userId %>">History</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/">Authorize</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <h1>Movie Information</h1>
+
+  <form id="movieForm" action="/movie/<%= userId %>" method="post">
+    <label for="movieTitle">Enter Movie Title:</label>
+    <input
+      type="text"
+      id="movieTitle"
+      name="movieTitle"
+      placeholder="Ex: Interstellar"
+    />
+    <button type="submit">Get Movie Information</button>
+  </form>
+
+  <div id="movieResultContainer">
+    <div class="movie-container">
+      <% if (movieData !== null) { %>
+      <h2><%= movieData.title %></h2>
+      <img src="<%= movieData.poster %>" alt="Movie Poster" />
+      <p class="movie-info">Rated: <%= movieData.rated %></p>
+      <p class="movie-info">Released: <%= movieData.released %></p>
+      <p class="movie-info">Runtime: <%= movieData.runtime %></p>
+      <p class="movie-info">Genre: <%= movieData.genre %></p>
+      <p class="movie-info">Director: <%= movieData.director %></p>
+      <p class="movie-info">Writer: <%= movieData.writer %></p>
+      <p class="movie-info">Actors: <%= movieData.actors %></p>
+      <p class="movie-info">Plot: <%= movieData.plot %></p>
+      <p class="movie-info">Language: <%= movieData.language %></p>
+      <p class="movie-info">Country: <%= movieData.country %></p>
+      <p class="movie-info">Awards: <%= movieData.awards %></p>
+      <p class="movie-info">Ratings:</p>
+      <ul>
+        <% movieData.ratings.forEach(rating => { %>
+        <li><%= rating.Source %>: <%= rating.Value %></li>
+        <% }); %>
+      </ul>
+      <p class="movie-info">Metascore: <%= movieData.metascore %></p>
+      <p class="movie-info">IMDB Rating: <%= movieData.imdbRating %></p>
+      <p class="movie-info">IMDB Votes: <%= movieData.imdbVotes %></p>
+      <p class="movie-info">IMDB ID: <%= movieData.imdbID %></p>
+      <p class="movie-info">Type: <%= movieData.type %></p>
+      <p class="movie-info">DVD: <%= movieData.dvd %></p>
+      <p class="movie-info">Box Office: <%= movieData.boxOffice %></p>
+      <% } %>
+    </div>
+  </div>
+</body>

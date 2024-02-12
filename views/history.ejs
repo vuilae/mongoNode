@@ -1,0 +1,130 @@
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather History</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="/public/css/style.css" />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"
+  ></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="/public/js/map.js" defer></script>
+  <script src="../public/js/history.js"></script>
+
+  <style>
+    h2,p {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/weather">
+        <img src="/public/2395608.png" width="60px" alt="Darina" />
+      </a>
+      <div class="ms-auto">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/weather/<%= userId %>">Weather</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/movie/<%= userId %>">Movie</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/nasa/<%= userId %>">Nasa Daily</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/history/<%= userId %>">History</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/">Authorize</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <main>
+    <h2>History for user <%= username %></h2>
+    <p>If this Get Pdf doesn't work it's because of deployment, if you run it on pc it will work</p>
+    <p>And if it doesn't open the first time, please click the buttong one more time</p>
+
+  <div class="centered-button-container">
+    <button
+      id="download-pdf-history-btn"
+      onclick="makePdf('weather', '<%= userId %>')"
+    >
+      Get History Pdf
+    </button>
+  </div>
+  <div class="results">
+    <h2>Weather History</h2>
+    <% if (weatherData.length > 0) { %> <% weatherData.forEach((weather, index) => { %>
+    <div class="movie-container">
+      <p>Record Number: <%= index + 1 %></p>
+      <p>
+        City: <%= weather.weatherData.city %>, Country: <%= weather.weatherData.country %>
+      </p>
+      <p>Temperature: <%= weather.weatherData.temperature %></p>
+      <p class="weather-info">Accessed At: <%= weather.accessedAt %></p>
+      <hr />
+    </div>
+    <% }); %> <% } else { %>
+    <p>No weather history available.</p>
+    <% } %>
+  </div>
+  
+
+  <div class="results">
+    <h2>Movie History</h2>
+
+    <% if (movieData.length > 0) { %> <% movieData.forEach((movie, index) => {
+    %>
+    <div class="movie-container">
+      <p>Record Number: <%= index + 1 %></p>
+      <p>Title: <%= movie.movieData.title %></p>
+      <p>Accessed At: <%= movie.accessedAt %></p>
+      <hr />
+    </div>
+    <% }); %> <% } else { %>
+    <p>No movie history available.</p>
+    <% } %>
+  </div>
+
+  <div class="results">
+    <h2>Nasa History</h2>
+
+    <% if (nasaData.length > 0) { %> <% nasaData.forEach((nasa, index) => { %>
+    <div class="movie-container">
+      <p>Record Number: <%= index + 1 %></p>
+      <p>Title: <%= nasa.nasaData.title %></p>
+      <p>Searched for Date: <%= nasa.nasaData.date %></p>
+      <p>Accessed At: <%= nasa.accessedAt %></p>
+      <hr />
+    </div>
+    <% }); %> <% } else { %>
+    <p>No NASA data available.</p>
+    <% } %>
+  </div></main>
+
+</body>

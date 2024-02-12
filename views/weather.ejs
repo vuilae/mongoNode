@@ -1,0 +1,125 @@
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather App</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="/public/css/style.css" />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"
+  ></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="/public/js/map.js" defer></script>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/weather">
+        <img src="/public/2395608.png" width="60px" alt="Darina" />
+      </a>
+      <div class="ms-auto">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/weather/<%= userId %>">Weather</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/movie/<%= userId %>">Movie</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/nasa/<%= userId %>">Nasa Daily</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/history/<%= userId %>">History</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/">Authorize</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <main>
+    <form id="weatherForm" action="/weather/<%= userId %>" method="post">
+      <label for="inputType">Select Option:</label>
+      <select id="inputType" name="inputType" onchange="selectInputType()">
+        <option value="city">Input City</option>
+        <option value="map">Select on Map</option>
+      </select>
+
+      <!-- Input for city -->
+      <div id="cityInput">
+        <label for="city">Enter City:</label>
+        <input type="text" id="city" name="city" />
+      </div>
+      <!-- Map container -->
+      <div id="mapInput" style="display: none">
+        <p>Select a location on the map:</p>
+        <div id="map" style="height: 400px; width: 100%"></div>
+      </div>
+
+      <!-- Hidden input fields for coordinates -->
+      <input type="hidden" id="lat" name="lat" />
+      <input type="hidden" id="lng" name="lng" />
+
+      <button type="submit">Get Weather</button>
+    </form>
+    <div class="results">
+      <div class="weather-container">
+        <% if (weatherData !== null) { %>
+        <h2><%= weatherData.city %>, <%= weatherData.country %></h2>
+        <p class="weather-info">
+          Temperature: <%= weatherData.temperature %> &deg;C
+        </p>
+        <p class="weather-info">
+          Feels Like: <%= weatherData.feelsLike %> &deg;C
+        </p>
+        <p class="weather-info">Description: <%= weatherData.description %></p>
+        <p class="weather-info">
+          Weather Icon:
+          <img
+            class="weather-icon"
+            src="https://openweathermap.org/img/wn/<%= weatherData.weatherIcon %>@2x.png"
+            alt="Weather Icon"
+          />
+        </p>
+        <p class="weather-info">
+          Coordinates: <%= weatherData.coordinates.lat %>, <%=
+          weatherData.coordinates.lon %>
+        </p>
+        <p class="weather-info">Humidity: <%= weatherData.humidity %>%</p>
+        <p class="weather-info">Pressure: <%= weatherData.pressure %> hPa</p>
+        <p class="weather-info">Wind Speed: <%= weatherData.windSpeed %> m/s</p>
+        <p class="weather-info">Country Code: <%= weatherData.countryCode %></p>
+        <p class="weather-info">
+          Rain Volume (1h): <%= weatherData.rainVolume %> mm
+        </p>
+        <p class="weather-info">Accessed At: <%= accessedAt %></p>
+        <% } %>
+      </div>
+    </div>
+  </main>
+  <footer class="bgColor text-white mt-5">
+    <div class="container text-center py-3">
+      <p>&copy; Bakeyeva Darina | SE-2206</p>
+    </div>
+  </footer>
+</body>

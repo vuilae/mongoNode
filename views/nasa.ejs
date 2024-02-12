@@ -1,0 +1,97 @@
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nasa</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="/public/css/style.css" />
+  <link
+    rel="stylesheet"
+    href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+  />
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"
+  ></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/weather">
+        <img src="/public/2395608.png" width="60px" alt="Darina" />
+      </a>
+      <div class="ms-auto">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/weather/<%= userId %>">Weather</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/movie/<%= userId %>">Movie</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/nasa/<%= userId %>">Nasa Daily</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/history/<%= userId %>">History</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/">Authorize</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <main>
+  <div id="apod-content">
+    <h1>NASA Astronomy Picture of the Day</h1>
+  </div>
+  <form id="dateForm" action="/nasa/<%=userId%>" method="post">
+    <label for="datepicker">Select Date:</label>
+    <input
+      type="text"
+      id="datepicker"
+      name="selectedDate"
+      placeholder="Please select a date that is earlier than today"
+    />
+    <button type="submit">View</button>
+  </form>
+
+  <div class="apod-content">
+    <% if (nasaData !== null) { %>
+    <h2><%= nasaData.title %></h2>
+    <p class="nasa-info">Date: <%= nasaData.date %></p>
+    <img src="<%= nasaData.url %>" alt="NASA Picture of the Day" />
+    <p class="nasa-explanation"><%=nasaData.explanation %></p>
+    <% } %>
+  </div></main>
+  <footer class="bgColor text-white mt-5">
+    <div class="container text-center py-3">
+      <p>&copy; Bakeyeva Darina | SE-2206</p>
+    </div>
+  </footer>
+  <script>
+    $(function () {
+      $("#datepicker").datepicker();
+    });
+  </script>
+</body>

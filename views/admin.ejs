@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>User List</title>
+    <link rel="stylesheet" href="../public/css/admin.css" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <h1>User List</h1>
+    <h1>Admin: <%= adminUsername %></h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Create</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% users.forEach(user => { %>
+        <tr>
+          <td><%= user.username %></td>
+          <td><form method="POST" action="/admin/<%= adminId %>/create/<%= user._id %>">
+            <input type="text" name="username" placeholder="Username">
+            <input type="password" name="password" placeholder="Password">
+            <button type="submit">Create User</button>
+          </form></td>
+          <td>
+            <form
+              method="POST"
+              action="/admin/<%= adminId %>/edit/<%= user._id %>"
+            >
+              <input
+                type="text"
+                name="username"
+                placeholder="Change username"
+                value="<%= user.username %>"
+              />
+              <input
+                type="password"
+                name="password"
+                placeholder="Change Password"
+                value="<%= user.username %>"
+              />
+              <button type="submit">Update</button>
+            </form>
+          </td>
+          <td>
+            <form
+              method="POST"
+              action="/admin/<%= adminId %>/delete/<%= user._id %>"
+            >
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </body>
+</html>
