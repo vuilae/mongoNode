@@ -30,7 +30,7 @@ This project is an application that integrates three different APIs: Weather API
 1. Clone the repository:
 
    ```bash
-   git clone -b master https://github.com/vuilae/mongoNode.git
+   git clone https://github.com/vuilae/mongoNode.git
    
 2. Install dependencies::
 
