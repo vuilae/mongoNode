@@ -207,14 +207,16 @@ app.get("/download-history/:id", async (req, res) => {
   });
 
   doc.end();
-  res.setHeader("Content-Type", "application/pdf");
-  res.setHeader(
-    "Content-Disposition",
-    `attachment; filename=${username}_history.pdf`
-  );
+ doc.on("end", () => {
+   res.setHeader("Content-Type", "application/pdf");
+   res.setHeader(
+     "Content-Disposition",
+     `attachment; filename=${username}_history.pdf`
+   );
 
-  // Pipe the generated PDF to the response
-  fs.createReadStream(pdfPath).pipe(res);
+   // Pipe the generated PDF to the response
+   fs.createReadStream(pdfPath).pipe(res);
+ });
 });
 
 // Login Route
