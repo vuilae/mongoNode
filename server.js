@@ -6,7 +6,6 @@ const session = require("express-session");
 const fs = require("fs");
 const PDFDocument = require("pdfkit");
 
-
 const weatherRoutes = require("./apiData/weatherApiData");
 const nasaRoutes = require("./apiData/nasaApiData");
 const movieRoutes = require("./apiData/movieApiData");
@@ -105,8 +104,9 @@ app.post("/redirect", (req, res) => {
   }
 });
 
-app.get("/download-history", async (req, res) => {
-  const { userId } = req.query;
+app.get("/download-history/:id", async (req, res) => {
+  console.log("here");
+  const userId = req.params.id;
 
   if (!userId) {
     return res.status(400).send("User ID is required");
@@ -207,17 +207,14 @@ app.get("/download-history", async (req, res) => {
   });
 
   doc.end();
+  res.setHeader("Content-Type", "application/pdf");
+  res.setHeader(
+    "Content-Disposition",
+    `attachment; filename=${username}_history.pdf`
+  );
 
-  // Send the combined PDF file as a download attachment
-  res.sendFile(pdfPath, (err) => {
-    if (err) {
-      console.error("Error sending file:", err);
-      res.status(500).send("Error sending file");
-    } else {
-      // Delete the temporary PDF file after sending
-      fs.unlinkSync(pdfPath);
-    }
-  });
+  // Pipe the generated PDF to the response
+  fs.createReadStream(pdfPath).pipe(res);
 });
 
 // Login Route

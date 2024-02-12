@@ -65,18 +65,11 @@
     </div>
   </nav>
   <main>
-    <h2>History for user <%= username %></h2>
-    <p>If this Get Pdf doesn't work it's because of deployment, if you run it on pc it will work</p>
-    <p>And if it doesn't open the first time, please click the buttong one more time</p>
-
-  <div class="centered-button-container">
-    <button
-      id="download-pdf-history-btn"
-      onclick="makePdf('weather', '<%= userId %>')"
-    >
-      Get History Pdf
-    </button>
-  </div>
+    
+    <form action="/download-history/<%= userId %>" method="GET">
+      <h2>Get full History in PDF format</h2>
+      <button type="submit" >Download </button>
+    </form>
   <div class="results">
     <h2>Weather History</h2>
     <% if (weatherData.length > 0) { %> <% weatherData.forEach((weather, index) => { %>
