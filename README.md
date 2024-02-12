@@ -52,8 +52,8 @@ The admin panel allows administrators to manage application settings.
 
 ## Admin Credentials
 
-- Username: vuilae
-- Password: vuilae123
+- Username: darina
+- Password: darina123
    
 
 ## Author
